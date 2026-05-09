@@ -1,2 +1,2 @@
-# MovieTicketBooking
-movie ticket booking website
+Đây là sự khởi đầu mới của tôi.
+Dự án cá nhân Website Movie Ticket Booking.
