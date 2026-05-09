@@ -38,7 +38,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        // Xác thực username và password
+        // 1. Xác thực username và password
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
@@ -46,11 +46,21 @@ public class AuthController {
                 )
         );
 
-        // Nếu không lỗi, tạo JWT và trả về cho client
-        String jwt = tokenProvider.generateToken((UserDetails) authentication.getPrincipal());
-        return ResponseEntity.ok(new JwtResponse(jwt));
+        // 2. Lấy thông tin UserDetails
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        // 3. Tạo JWT
+        String jwt = tokenProvider.generateToken(userDetails);
+
+        // 4. Lấy Role (Giả sử User chỉ có 1 Role)
+        String role = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .findFirst()
+                .orElse("ROLE_USER");
+
+        // 5. TRẢ VỀ ĐẦY ĐỦ THÔNG TIN CHO FRONTEND
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), role));
     }
-    
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
     	if(userRepository.existsByUsername(registerRequest.getUsername())) {
@@ -61,7 +71,7 @@ public class AuthController {
     	user.setUsername(registerRequest.getUsername());
     	user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
     	user.setEmail(registerRequest.getEmail());
-    	user.setRole("ROLL_USER");
+    	user.setRole("ROLE_USER");
     	userRepository.save(user);
     	return ResponseEntity.ok("User đã đăng ký thành công");
     }
