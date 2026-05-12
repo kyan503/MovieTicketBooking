@@ -1,0 +1,23 @@
+/* AdminMovie.module.css */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+}
+
+.movieTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #222;
+}
+
+.movieTable th, .movieTable td {
+  padding: 12px;
+  border: 1px solid #444;
+  text-align: left;
+}
+
+.btnEdit { background-color: #ffc107; margin-right: 5px; padding: 5px 10px; border-radius: 4px; }
+.btnDelete { background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; }

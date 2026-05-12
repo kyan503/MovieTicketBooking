@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Home from './pages/Home';
-import AdminMovie from './pages/AdminMovie';
-import "./App.css";
+import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
+import Home from './pages/Home/Home';
+import AdminMovie from './pages/Admin/AdminMovie';
+import Booking from './pages/Booking/Booking';
+
 
 // Component kiểm tra quyền truy cập
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -27,6 +28,12 @@ function App() {
                 <Route path="/home" element={
                     <ProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
                         <Home />
+                    </ProtectedRoute>
+                } />
+
+                <Route path="/booking/:showtimeId/seats" element={
+                    <ProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
+                        <Booking />
                     </ProtectedRoute>
                 } />
 

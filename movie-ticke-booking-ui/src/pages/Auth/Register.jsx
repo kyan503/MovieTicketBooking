@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import styles from './Auth.module.css';
 
 const Register = () => {
     const [formData, setFormData] = useState({ username: '', password: '', email: '' });
@@ -17,36 +18,42 @@ const Register = () => {
         }
     };
 
-    return (
-        <div className="auth-page">
-            <div className="auth-card">
+   return (
+        <div className={styles.authPage}>
+            <div className={styles.authCard}>
                 <h2>Đăng Ký</h2>
                 <form onSubmit={handleRegister}>
-                    <div className="auth-group">
+                    <div className={styles.authGroup}>
                         <input 
-                            className="auth-input"
-                            type="text" placeholder="Tên đăng nhập" required
+                            className={styles.authInput}
+                            type="text" 
+                            placeholder="Tên đăng nhập" 
+                            required
                             onChange={e => setFormData({...formData, username: e.target.value})} 
                         />
                     </div>
-                    <div className="auth-group">
+                    <div className={styles.authGroup}>
                         <input 
-                            className="auth-input"
-                            type="email" placeholder="Email" required
+                            className={styles.authInput}
+                            type="email" 
+                            placeholder="Email" 
+                            required
                             onChange={e => setFormData({...formData, email: e.target.value})} 
                         />
                     </div>
-                    <div className="auth-group">
+                    <div className={styles.authGroup}>
                         <input 
-                            className="auth-input"
-                            type="password" placeholder="Mật khẩu" required
+                            className={styles.authInput}
+                            type="password" 
+                            placeholder="Mật khẩu" 
+                            required
                             onChange={e => setFormData({...formData, password: e.target.value})} 
                         />
                     </div>
-                    <button type="submit" className="auth-btn">Đăng Ký</button>
+                    <button type="submit" className={styles.authBtn}>Đăng Ký</button>
                 </form>
-                <div className="auth-footer">
-                    Đã có tài khoản? <Link to="/login">Đăng nhập.</Link>
+                <div className={styles.authFooter}>
+                    Đã có tài khoản? <Link to="/login">Đăng nhập ngay.</Link>
                 </div>
             </div>
         </div>

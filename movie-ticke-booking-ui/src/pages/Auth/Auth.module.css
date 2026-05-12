@@ -1,0 +1,49 @@
+.authPage {
+    background-color: #141414;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.authCard {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 60px;
+    border-radius: 8px;
+    width: 100%;       /* Đảm bảo chiếm hết không gian container */
+    max-width: 450px;  /* Giới hạn chiều rộng tối đa của khung */
+    color: white;
+    box-sizing: border-box; /* Giúp padding không làm tăng kích thước card */
+}
+
+.authInput {
+    width: 100%;
+    padding: 12px;
+    background: #333;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    box-sizing: border-box; /* CỰC KỲ QUAN TRỌNG để thanh không bị tràn */
+}
+
+.authBtn {
+    width: 100%;
+    padding: 12px;
+    background: #e50914;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    box-sizing: border-box; /* Giúp nút bấm dài bằng ô input */
+    margin-top: 10px;
+}
+
+.authGroup {
+    margin-bottom: 20px;
+}
+
+.authFooter {
+    margin-top: 20px;
+    color: #737373;
+}

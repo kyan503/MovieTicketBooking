@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import '../App.css';
+import styles from './AdminMovie.module.css';
+
 
 function AdminMovie() {
   const [movies, setMovies] = useState([]);
@@ -71,12 +72,12 @@ function AdminMovie() {
     fetchMovies();
   }, []);
 
-  return (
-    <div className="container">
+ return (
+    <div className={styles.container}>
       <h1>Quản Lý Danh Sách Phim</h1>
 
       {/* Form dùng chung cho cả Thêm và Sửa */}
-      <div className="form-container">
+      <div className={styles.formContainer}>
         <h3>{isEditing ? "Cập nhật phim" : "Thêm phim mới"}</h3>
         <form onSubmit={handleSaveMovie}>
           <input
@@ -98,16 +99,16 @@ function AdminMovie() {
             onChange={(e) => setNewMovie({ ...newMovie, duration: e.target.value })}
             required
           />
-          <button type="submit" className="btn-save">
+          <button type="submit" className={styles.btnSave}>
             {isEditing ? "Cập nhật" : "Thêm phim"}
           </button>
           {isEditing && (
-            <button type="button" onClick={cancelEdit} className="btn-cancel">Hủy</button>
+            <button type="button" onClick={cancelEdit} className={styles.btnCancel}>Hủy</button>
           )}
         </form>
       </div>
 
-      <table className="movie-table">
+      <table className={styles.movieTable}>
         <thead>
           <tr>
             <th>Tên Phim</th>
@@ -123,8 +124,8 @@ function AdminMovie() {
               <td>{movie.genre}</td>
               <td>{movie.duration} phút</td>
               <td>
-                <button onClick={() => editMovie(movie)} className="btn-edit">Sửa</button>
-                <button onClick={() => deleteMovie(movie.id)} className="btn-delete">Xóa</button>
+                <button onClick={() => editMovie(movie)} className={styles.btnEdit}>Sửa</button>
+                <button onClick={() => deleteMovie(movie.id)} className={styles.btnDelete}>Xóa</button>
               </td>
             </tr>
           ))}
