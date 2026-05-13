@@ -1,18 +1,23 @@
 package com.movieticketbookingwebsite.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.movieticketbookingwebsite.entity.Movies;
 import com.movieticketbookingwebsite.service.MovieService;
@@ -37,16 +42,19 @@ public class MovieController {
                 .orElse(ResponseEntity.notFound().build());
     }
 	
-	@PostMapping
-	public Movies createMovie(@RequestBody Movies movie ) {
-		return movieService.createMovie(movie);
-		
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<Movies> createMovie(
+	        @ModelAttribute Movies movie, 
+	        @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+	    return ResponseEntity.ok(movieService.createMovie(movie, file));
 	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<Movies> updateMoive(@PathVariable Integer id, @RequestBody Movies movie){
-	return ResponseEntity.ok(movieService.updateMovie(id, movie));
-	
+
+	@PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<Movies> updateMovie(
+	        @PathVariable Integer id, 
+	        @ModelAttribute Movies movie,
+	        @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+	    return ResponseEntity.ok(movieService.updateMovie(id, movie, file));
 	}
 	
 	@DeleteMapping("/{id}")

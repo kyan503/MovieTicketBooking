@@ -1,23 +1,79 @@
-/* AdminMovie.module.css */
 .container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-  color: white;
+    padding: 20px;
+    background-color: #1a1a1a;
+    color: white;
+    min-height: 100vh;
+}
+
+.formContainer {
+    background: #2a2a2a;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.adminForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.inputGroup {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.inputGroup input, .textArea {
+    padding: 10px;
+    background: #333;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 4px;
+}
+
+.textArea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+}
+
+.fileSection {
+    background: #333;
+    padding: 10px;
+    border-radius: 4px;
 }
 
 .movieTable {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background-color: #222;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .movieTable th, .movieTable td {
-  padding: 12px;
-  border: 1px solid #444;
-  text-align: left;
+    border-bottom: 1px solid #444;
+    padding: 12px;
+    text-align: left;
 }
 
-.btnEdit { background-color: #ffc107; margin-right: 5px; padding: 5px 10px; border-radius: 4px; }
-.btnDelete { background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; }
+.posterPreview {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.descriptionCell {
+    max-width: 300px;
+    font-size: 0.9rem;
+    color: #ccc;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.btnSave { background: #e50914; color: white; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; }
+.btnEdit { background: #4CAF50; color: white; padding: 5px 10px; border: none; margin-right: 5px; cursor: pointer; }
+.btnDelete { background: #f44336; color: white; padding: 5px 10px; border: none; cursor: pointer; }
+.btnCancel { background: #777; color: white; padding: 10px 20px; border: none; margin-left: 10px; cursor: pointer; }

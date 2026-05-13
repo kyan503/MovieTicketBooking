@@ -11,3 +11,4 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Integer>{
 	@Query("SELECT s FROM Showtime s JOIN FETCH s.movie JOIN FETCH s.room")
    List<Showtime> findAllWithMovieAndRoom();
 }
+
