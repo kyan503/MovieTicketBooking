@@ -10,16 +10,18 @@ public class ShowtimeDTO {
     private BigDecimal ticketPrice;
     private String movieTitle;
     private String posterUrl;
+    private String trailerUrl;
     private String roomName;
     
 	public ShowtimeDTO(Integer id, LocalDateTime startTime, BigDecimal ticketPrice, String movieTitle, String posterUrl,
-			String roomName) {
+			String trailerUrl,String roomName) {
 		super();
 		this.id = id;
 		this.startTime = startTime;
 		this.ticketPrice = ticketPrice;
 		this.movieTitle = movieTitle;
 		this.posterUrl = posterUrl;
+		this.trailerUrl = trailerUrl;
 		this.roomName = roomName;
 	}
 
@@ -62,7 +64,13 @@ public class ShowtimeDTO {
 	public void setPosterUrl(String posterUrl) {
 		this.posterUrl = posterUrl;
 	}
+	public String getTrailerUrl() {
+        return trailerUrl;
+    }
 
+    public void setTrailerUrl(String trailerUrl) {
+        this.trailerUrl = trailerUrl;
+    }
 	public String getRoomName() {
 		return roomName;
 	}

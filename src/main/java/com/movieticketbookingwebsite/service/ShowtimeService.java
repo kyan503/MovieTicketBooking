@@ -23,6 +23,7 @@ public class ShowtimeService {
                 s.getTicketPrice(),
                 s.getMovie().getTitle(),
                 s.getMovie().getPosterUrl(),
+                s.getMovie().getTrailerUrl(),
                 s.getRoom().getName()
             )).collect(Collectors.toList());
     }

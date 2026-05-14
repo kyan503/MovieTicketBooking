@@ -56,9 +56,6 @@ public class MovieService {
                 } catch (IOException e) {
                     throw new RuntimeException("Upload failed");
                 }
-            } else {
-                // Nếu không có file mới, giữ nguyên URL cũ
-                movie.setPosterUrl(movieDetails.getPosterUrl());
             }
             
             return movieRepository.save(movie);
