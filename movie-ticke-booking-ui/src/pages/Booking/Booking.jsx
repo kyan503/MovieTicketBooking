@@ -39,12 +39,49 @@ useEffect(() => {
 
     const totalPrice = selectedSeats.reduce((sum, s) => sum + s.price, 0);
 
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         if (selectedSeats.length === 0) return alert("Vui lòng chọn ít nhất 1 ghế!");
         // Ở đây sẽ gọi tiếp API thanh toán/đặt vé
-        console.log("Dữ liệu đặt vé:", { showtimeId, selectedSeats });
-        alert("Chuyển đến trang thanh toán...");
-    };
+        const token = localStorage.getItem("token");
+    if (!token) {
+        alert("Vui lòng đăng nhập để đặt vé!");
+        return navigate("/login");
+    }
+
+    try {
+        // BƯỚC 1: Tạo Ticket ở trạng thái PENDING trong Database
+        // Giả sử API đặt vé của bạn trả về thông tin Ticket vừa tạo
+        const bookingRes = await axios.post(
+            `http://localhost:8081/api/booking/create`, 
+            {
+                showtimeId: showtimeId,
+                seatIds: selectedSeats.map(s => s.seatId),
+                totalPrice: totalPrice
+            },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        const ticketId = bookingRes.data.id; // Lấy ID của vé vừa tạo
+
+        // BƯỚC 2: Gọi API lấy URL thanh toán VNPay từ PaymentController
+        const paymentRes = await axios.post(
+            `http://localhost:8081/api/payment/create-payment?ticketId=${ticketId}`,
+            {}, // Body trống vì ticketId đã gửi qua Param
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        // BƯỚC 3: Chuyển hướng sang VNPay nếu có URL
+        if (paymentRes.data && paymentRes.data.url) {
+            window.location.href = paymentRes.data.url;
+        } else {
+            alert("Không thể khởi tạo thanh toán, vui lòng thử lại.");
+        }
+
+    } catch (err) {
+        console.error("Lỗi quy trình thanh toán:", err);
+        alert(err.response?.data || "Đã xảy ra lỗi trong quá trình đặt vé.");
+    }
+};
 
     return (
         <div className={styles.container}>

@@ -54,7 +54,9 @@ public class SecurityConfig {
 	                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	                .authorizeHttpRequests(auth -> auth
 	                        // SỬA TẠI ĐÂY: Đảm bảo có dấu / và thử dùng authorizeHttpRequests chuẩn
-	                        .requestMatchers("/api/auth/**","/error").permitAll() 
+	                        .requestMatchers("/api/auth/**",
+	                        		"/error",
+	                        		"/api/payment/vnpay-callback**").permitAll()     
 	                        .anyRequest().authenticated()
 	                )
 	                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
