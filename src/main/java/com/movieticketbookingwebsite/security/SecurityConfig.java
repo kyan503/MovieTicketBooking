@@ -56,7 +56,8 @@ public class SecurityConfig {
 	                        // SỬA TẠI ĐÂY: Đảm bảo có dấu / và thử dùng authorizeHttpRequests chuẩn
 	                        .requestMatchers("/api/auth/**",
 	                        		"/error",
-	                        		"/api/payment/vnpay-callback**").permitAll()     
+	                        		"/api/payment/vnpay-callback**",
+	                        		"/ws/**").permitAll()     
 	                        .anyRequest().authenticated()
 	                )
 	                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -67,9 +68,11 @@ public class SecurityConfig {
 	    @Bean
 	    public CorsConfigurationSource corsConfigurationSource() {
 	        CorsConfiguration configuration = new CorsConfiguration();
-	        configuration.setAllowedOrigins(Arrays.asList("*")); // Cho phép tất cả các nguồn
+	        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Cho phép tất cả các nguồn
 	        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 	        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+	        configuration.setAllowCredentials(true);
+	        
 	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	        source.registerCorsConfiguration("/**", configuration);
 	        return source;

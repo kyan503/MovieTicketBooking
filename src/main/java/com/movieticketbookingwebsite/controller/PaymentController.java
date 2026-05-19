@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.movieticketbookingwebsite.service.EmailService;
 import com.movieticketbookingwebsite.service.TicketService;
 import com.movieticketbookingwebsite.service.VNPayService;
 
@@ -28,6 +29,9 @@ public class PaymentController {
 
     @Autowired
     private TicketService ticketService;
+    
+    @Autowired
+    private EmailService emailService;
 
     // 1. Endpoint gọi từ React khi nhấn thanh toán
     @PostMapping("/create-payment")
@@ -63,11 +67,26 @@ public class PaymentController {
         String vnp_PayDate = request.getParameter("vnp_PayDate");
 
         if (paymentStatus == 1) {
-            // Thanh toán thành công: Cập nhật Ticket sang PAID
+            // 1. Cập nhật Ticket sang trạng thái PAID trong cơ sở dữ liệu
             ticketService.updatePaymentStatus(vnp_TxnRef, vnp_TransactionNo, vnp_ResponseCode, vnp_PayDate, "PAID");
+            
+            // 2. KÍCH HOẠT GỬI EMAIL: Lấy thông tin vé vừa thanh toán xong để lấy email khách hàng
+            try {
+                Integer ticketId = Integer.parseInt(vnp_TxnRef);
+                ticketService.getTicketById(ticketId).ifPresent(ticket -> {
+                    // Lấy email từ đối tượng User liên kết với Ticket
+                    String customerEmail = ticket.getUser().getEmail(); 
+                    if (customerEmail != null && !customerEmail.isEmpty()) {
+                        // Tiến hành gửi Email bất đồng bộ hoặc đồng bộ trực tiếp
+                        emailService.sendTicketConfirmationEmail(customerEmail, ticket);
+                   }
+                });
+            } catch (Exception e) {
+                System.err.println("Lỗi tìm kiếm vé hoặc gửi email xác nhận: " + e.getMessage());
+            }
+
             return ResponseEntity.status(302).location(URI.create("http://localhost:5173/payment-success?id=" + vnp_TxnRef)).build();
         } else {
-            // Thanh toán thất bại
             ticketService.updatePaymentStatus(vnp_TxnRef, vnp_TransactionNo, vnp_ResponseCode, vnp_PayDate, "CANCELLED");
             return ResponseEntity.status(302).location(URI.create("http://localhost:5173/payment-failed")).build();
         }
