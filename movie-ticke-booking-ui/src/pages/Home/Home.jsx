@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Trailer from './Trailer'; // Component TrailerModal của bạn
+import Profile from './Profile'; // ĐÃ IMPORT: Component Profile vừa tách riêng
 import styles from './Home.module.css';
 
 const Home = () => {
@@ -10,6 +11,9 @@ const Home = () => {
     const [selectedTrailer, setSelectedTrailer] = useState("");
     const navigate = useNavigate();
 
+    // ĐÃ BỔ SUNG: State kiểm soát trạng thái đóng/mở của cửa sổ Profile
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    
     const handleWatchTrailer = (url) => {
         if (!url) {
             alert("Phim này hiện chưa có trailer!");
@@ -52,8 +56,48 @@ const Home = () => {
         <div className={styles.container}>
             {/* Header / Navbar */}
             <nav className={styles.navbar}>
-                <h1 className={styles.logo}>MOVIE TICKET</h1>
-                <button onClick={handleLogout} className={styles.logoutBtn}>Đăng xuất</button>
+                <h1 className={styles.logo} onClick={() => navigate("/")} style={{ cursor: 'pointer' }}>
+                    MOVIE TICKET
+                </h1>
+                
+                {/* Khối bọc các nút chức năng trên Navbar */}
+                <div className={styles.navActions} style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                    
+                    {/* ĐÃ BỔ SUNG: Nút bấm để mở Profile cá nhân */}
+                    <button 
+                        onClick={() => setIsProfileOpen(true)} 
+                        style={{
+                            backgroundColor: 'transparent',
+                            color: '#ccc',
+                            border: '1px solid #555',
+                            padding: '8px 12px',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontWeight: '500',
+                            transition: 'all 0.2s'
+                        }}
+                    >
+                        👤 Tài khoản
+                    </button>
+
+                    <button 
+                        onClick={() => navigate("/history")} 
+                        className={styles.historyBtn}
+                        style={{
+                            backgroundColor: '#e50914',
+                            color: 'white',
+                            border: 'none',
+                            padding: '8px 16px',
+                            borderRadius: '4px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            transition: 'background 0.2s'
+                        }}
+                    >
+                        🎟️ Lịch sử đặt vé
+                    </button>
+                    <button onClick={handleLogout} className={styles.logoutBtn}>Đăng xuất</button>
+                </div>
             </nav>
 
             {/* Banner */}
@@ -116,11 +160,17 @@ const Home = () => {
                 )}
             </div>
 
-            {/* Modal Trailer được chèn vào đây */}
+            {/* Modal Trailer */}
             <Trailer
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 trailerUrl={selectedTrailer}
+            />
+
+            {/* ĐÃ BỔ SUNG: Nhúng Component Profile ẩn vào đây */}
+            <Profile 
+                isOpen={isProfileOpen} 
+                onClose={() => setIsProfileOpen(false)} 
             />
         </div>
     );

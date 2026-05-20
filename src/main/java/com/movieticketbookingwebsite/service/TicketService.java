@@ -1,9 +1,11 @@
 package com.movieticketbookingwebsite.service;
 
 import java.beans.Transient;
+import java.util.List;
 import java.util.Optional;
 
 import com.movieticketbookingwebsite.entity.Ticket;
+import com.movieticketbookingwebsite.entity.User;
 import com.movieticketbookingwebsite.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,11 @@ public class TicketService {
 
     public void save(Ticket ticket) {
         ticketRepository.save(ticket);
+    }
+    
+    public List<Ticket> getBookingHistory(User user){
+    	return ticketRepository.findByUserAndStatusOrderByIdDesc(user,"PAID");
+    	
     }
 
 }

@@ -1,0 +1,70 @@
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    text-align: center;
+    color: #e50914;
+    margin-bottom: 30px;
+}
+
+.noTicket {
+    text-align: center;
+    color: #aaa;
+    font-style: italic;
+    margin-top: 50px;
+}
+
+.ticketCard {
+    background: #1e1e1e;
+    border-left: 5px solid #e50914;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leftInfo h3 {
+    margin: 0 0 10px 0;
+    color: #fff;
+    font-size: 20px;
+}
+
+.leftInfo p {
+    margin: 6px 0;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.seatHighlight {
+    color: #e50914;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.rightPrice {
+    text-align: right;
+}
+
+.price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2ecc71;
+    margin-bottom: 10px;
+}
+
+.statusPaid {
+    background: #2ecc71;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}

@@ -1,113 +1,234 @@
 /* src/pages/Home/Home.module.css */
+
+/* --- 1. KHUNG TỔNG THỂ --- */
 .container {
-    background-color: #0b0b0b; /* Màu tối sâu hơn */
+    background-color: #0b0b0b; /* Màu tối sâu cinematic */
     min-height: 100vh;
     color: #ffffff;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+/* --- 2. THANH NAVBAR HIỆN ĐẠI --- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 60px;
-    background-color: rgba(0, 0, 0, 0.9);
+    padding: 18px 60px;
+    background-color: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
 }
 
 .logo {
     color: #e50914;
-    font-size: 28px;
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Nút Đăng xuất đồng bộ tinh tế hơn */
+.logoutBtn {
+    background-color: #262626 !important;
+    color: #ffffff !important;
+    border: 1px solid #3d3d3d !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    transition: background 0.2s !important;
+}
+
+.logoutBtn:hover {
+    background-color: #333333 !important;
+}
+
+/* --- 3. HERO BANNER HOÀNH TRÁNG (MỚI BỔ SUNG) --- */
+.banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 320px; /* Chiều cao vùng Banner */
+    position: relative;
+    padding: 0 20px;
+    /* Ảnh nền rạp phim chìm hiện đại */
+    background: linear-gradient(rgba(11, 11, 11, 0.3), #0b0b0b), 
+                url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1920') no-repeat center/cover;
+    margin-bottom: 20px;
+}
+
+.banner h2 {
+    font-size: 2.5rem;
     font-weight: 800;
+    margin: 0 0 12px 0;
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    background: linear-gradient(to right, #ffffff, #e50914);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
+.banner p {
+    color: #cccccc;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0;
+    max-width: 650px;
+    line-height: 1.5;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* --- 4. DANH SÁCH GRID PHIM --- */
 .movieGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Tăng kích thước tối thiểu */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 40px;
-    padding: 40px 60px;
+    padding: 20px 60px 60px 60px;
 }
 
+/* --- 5. Ô CHỨA PHIM (CARD ĐỒNG ĐỀU NHAU TUYỆT ĐỐI) --- */
 .card {
-    background-color: #181818;
-    border-radius: 12px; /* Bo góc mượt hơn */
+    background-color: #141414;
+    border-radius: 12px;
     overflow: hidden;
     text-align: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    border: 1px solid #333;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    border: 1px solid #222222;
+    
+    /* FIX CHÍNH: Ép tất cả các card có chung một cơ chế giãn cách dọc */
+    display: flex;
+    flex-direction: column;
 }
 
 .card:hover {
-    transform: translateY(-10px); /* Bay lên một chút */
-    box-shadow: 0 12px 30px rgba(229, 9, 20, 0.2); /* Đổ bóng đỏ nhẹ khi hover */
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(229, 9, 20, 0.25);
     border-color: #e50914;
 }
 
 .image {
     width: 100%;
-    height: 320px; /* Tăng chiều cao ảnh */
+    height: 380px; /* Chiều cao poster phim */
     object-fit: cover;
-    transition: 0.4s;
+    transition: transform 0.5s ease;
 }
 
 .card:hover .image {
-    filter: brightness(1.1); /* Làm sáng ảnh khi di chuột vào */
+    transform: scale(1.03);
 }
 
+/* Phần bọc thông tin chữ bên dưới ảnh */
 .cardInfo {
     padding: 20px;
+    /* FIX CHÍNH: Cho phép vùng này tự động phình to hết cỡ để đẩy nút bấm xuống đáy */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
 }
 
 .title {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    margin: 0 0 10px 0;
+    margin: 0 0 12px 0;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Cắt ngắn tên phim quá dài bằng dấu ... */
+    text-overflow: ellipsis;
 }
 
+/* Mác Phòng Chiếu - Cố định chiều cao tối thiểu để không bị lệch ô */
 .genre {
-    color: #aaa;
+    color: #00ff87; /* Xanh neon cực nét */
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(0, 255, 135, 0.06);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 255, 135, 0.15);
+    
+    /* FIX LỆCH Ô: Giúp phần text dù là 1 dòng hay 2 dòng thì ô tổng thể vẫn cao bằng nhau */
+    min-height: 42px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 90%;
+    margin: 0 auto 12px auto;
+    line-height: 1.3;
+}
+
+/* Dòng hiển thị thời gian */
+.time {
     font-size: 0.9rem;
-    margin-bottom: 20px;
+    color: #999999;
+    margin: 0 0 16px 0;
     font-weight: 500;
 }
 
+/* Nút Xem Trailer */
+.trailerBtn {
+    width: 100%;
+    background-color: #222222 !important;
+    color: #cccccc !important;
+    border: 1px solid #333333 !important;
+    padding: 10px 0 !important;
+    border-radius: 6px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.2s ease !important;
+    
+    /* Đảm bảo nút luôn tự đứng độc lập */
+    margin-top: auto; 
+}
+
+.trailerBtn:hover {
+    background-color: #333333 !important;
+    color: #ffffff !important;
+    border-color: #555555 !important;
+}
+
+/* Nút Đặt Vé */
 .bookBtn {
-    background-color: #e50914; /* Đổi sang màu đỏ cho đồng bộ logo */
+    background-color: #e50914;
     color: white;
     border: none;
-    width: 100%; /* Nút rộng toàn bộ card */
+    width: 100%;
     padding: 12px 0;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 0.95rem;
     text-transform: uppercase;
-    transition: 0.3s;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
 }
 
 .bookBtn:hover {
     background-color: #ff0a16;
-    box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.45);
 }
+
+/* --- 6. GIỮ NGUYÊN HOÀN TOÀN CẤU TRÚC MODAL TRAILER --- */
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Nền tối mờ */
+    background: rgba(0, 0, 0, 0.85);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Luôn nằm trên cùng */
+    z-index: 9999;
 }
 
 .modalContent {
@@ -115,13 +236,14 @@
     max-width: 900px;
     background: #000;
     position: relative;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(229, 9, 20, 0.4);
+    overflow: hidden;
 }
 
 .videoWrapper {
     position: relative;
-    padding-bottom: 56.25%; /* Tỉ lệ khung hình 16:9 */
+    padding-bottom: 56.25%;
     height: 0;
 }
 
@@ -135,11 +257,15 @@
 
 .closeBtn {
     position: absolute;
-    top: -40px;
+    top: -45px;
     right: 0;
     background: none;
     border: none;
     color: white;
-    font-size: 35px;
+    font-size: 30px;
     cursor: pointer;
+}
+
+.closeBtn:hover {
+    color: #e50914;
 }

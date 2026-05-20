@@ -56,7 +56,7 @@ const Booking = () => {
                         );
 
                         if (hasLostSeat && data.status === "PENDING") {
-                            alert("Có ghế bạn đang lựa chọn vừa được người khác tiến hành thanh toán!");
+                            //alert("Có ghế bạn đang lựa chọn vừa được người khác tiến hành thanh toán!");
                             // Lọc bỏ ghế bị mất ra
                             return prevSelected.filter(s => 
                                 !data.seatIds.map(String).includes(String(s.seatId))

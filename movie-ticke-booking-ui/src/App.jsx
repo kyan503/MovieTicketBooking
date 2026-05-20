@@ -6,6 +6,8 @@ import AdminMovie from './pages/Admin/AdminMovie';
 import Booking from './pages/Booking/Booking';
 import PaymentSuccess from './pages/Booking/PaymentSuccess'; 
 //import PaymentFailed from './pages/PaymentFailed';
+import History from './pages/Home/History';
+import Profile from './pages/Home/Profile';
 
 
 // Component kiểm tra quyền truy cập
@@ -32,6 +34,17 @@ function App() {
                         <Home />
                     </ProtectedRoute>
                 } />
+                <Route path="/history" element={
+                    <ProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
+                        <History />
+                    </ProtectedRoute>
+                    } />
+
+                <Route path="/profile" element={
+                    <ProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
+                        <Profile />
+                    </ProtectedRoute>
+                }/>
 
                 <Route path="/booking/:showtimeId/seats" element={
                     <ProtectedRoute allowedRoles={['ROLE_USER', 'ROLE_ADMIN']}>
